@@ -5,10 +5,13 @@ import br.com.alura.alurex.api.exception.User.DuplicateUsernameException;
 import br.com.alura.alurex.api.exception.User.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,5 +37,12 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(exceptionDetails.httpStatus()).body(exceptionDetails);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<List<FormExceptionDetails>> handleArgumentNotValid(MethodArgumentNotValidException ex){
+        List<FieldError> errors = ex.getFieldErrors();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.stream().map(FormExceptionDetails::new).toList());
     }
 }
