@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Long> {
     @Query("SELECT new br.com.alura.alurex.api.dto.UserDetailsByUsernameDTO(user.name, user.email, user.role) FROM User user WHERE user.username = :username")
-    Optional<UserDetailsByUsernameDTO> findByUsername(String username);
+    Optional<UserDetailsByUsernameDTO> findByUsernameReturnDTO(String username);
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    Optional<User> findUserByUsernameReturnModel(String username);
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
 }

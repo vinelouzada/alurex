@@ -1,5 +1,8 @@
 package br.com.alura.alurex.api.exception;
 
+import br.com.alura.alurex.api.exception.Course.CourseNotFoundException;
+import br.com.alura.alurex.api.exception.Enrollment.EnrollmentAlreadyExistsException;
+import br.com.alura.alurex.api.exception.Enrollment.EnrollmentNotFoundException;
 import br.com.alura.alurex.api.exception.User.DuplicateEmailException;
 import br.com.alura.alurex.api.exception.User.DuplicateUsernameException;
 import br.com.alura.alurex.api.exception.User.UserNotFoundException;
@@ -16,8 +19,9 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ExceptionDetails> handleUserNotFound(UserNotFoundException ex){
+    @ExceptionHandler({UserNotFoundException.class, CourseNotFoundException.class, EnrollmentNotFoundException.class})
+    public ResponseEntity<ExceptionDetails> handleNotFoundException(RuntimeException ex){
+
         ExceptionDetails exceptionDetails = new ExceptionDetails(
                 ex.getMessage(),
                 HttpStatus.NOT_FOUND,
@@ -27,8 +31,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(exceptionDetails.httpStatus()).body(exceptionDetails);
     }
 
-    @ExceptionHandler({DuplicateEmailException.class, DuplicateUsernameException.class})
-    public ResponseEntity<ExceptionDetails> handleDuplicateUserException(RuntimeException ex) {
+    @ExceptionHandler({DuplicateEmailException.class, DuplicateUsernameException.class, EnrollmentAlreadyExistsException.class})
+    public ResponseEntity<ExceptionDetails> handleDuplicateDataException(RuntimeException ex) {
 
         ExceptionDetails exceptionDetails = new ExceptionDetails(
                 ex.getMessage(),

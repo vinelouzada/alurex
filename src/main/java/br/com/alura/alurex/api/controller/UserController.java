@@ -13,12 +13,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService service;
 
-    @PostMapping("/user")
+    @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody @Valid CreateUserDTO dto, UriComponentsBuilder uriBuilder){
         Long idUser = this.service.create(dto);
@@ -27,9 +28,9 @@ public class UserController {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity findByUsername(@PathVariable String username){
-        UserDetailsByUsernameDTO dto = this.service.findByUsername(username);
+        UserDetailsByUsernameDTO dto = this.service.findByUsernameReturnDTO(username);
         return ResponseEntity.ok().body(dto);
     }
 

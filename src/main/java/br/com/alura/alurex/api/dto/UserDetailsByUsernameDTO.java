@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserDetailsByUsernameDTO {
     private String name;
-    private String username;
+    private String email;
     private String rule;
 }

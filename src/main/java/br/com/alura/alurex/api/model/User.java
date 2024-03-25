@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "users")
 @Entity(name = "User")
@@ -26,6 +27,9 @@ public class User {
     private String password;
     private String role;
     private LocalDate createdAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Enrollment> enrollments;
 
     public User(CreateUserDTO dto){
         this.name = dto.name();
