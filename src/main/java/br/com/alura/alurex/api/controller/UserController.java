@@ -1,6 +1,7 @@
 package br.com.alura.alurex.api.controller;
 
 import br.com.alura.alurex.api.dto.CreateUserDTO;
+import br.com.alura.alurex.api.dto.UserDataDTO;
 import br.com.alura.alurex.api.dto.UserDetailsByUsernameDTO;
 import br.com.alura.alurex.api.service.UserService;
 import jakarta.validation.Valid;
@@ -21,16 +22,16 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<CreateUserDTO> create(@RequestBody @Valid CreateUserDTO dto, UriComponentsBuilder uriBuilder){
-        Long idUser = this.service.create(dto);
-        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(idUser).toUri();
+    public ResponseEntity<UserDataDTO> create(@RequestBody @Valid CreateUserDTO dto, UriComponentsBuilder uriBuilder){
+        UserDataDTO userDataDTO = this.service.create(dto);
+        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(userDataDTO.id()).toUri();
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(userDataDTO);
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<UserDetailsByUsernameDTO> findByUsername(@PathVariable String username){
-        UserDetailsByUsernameDTO dto = this.service.findByUsernameReturnDTO(username);
+        UserDetailsByUsernameDTO dto = this.service.findByUsername(username);
         return ResponseEntity.ok().body(dto);
     }
 
