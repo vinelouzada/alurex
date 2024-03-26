@@ -37,7 +37,6 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<Enrollment> enrollments;
 
-
     public Course (CreateCourseDTO dto, User instrutor){
         this.name = dto.name();
         this.code = dto.code();

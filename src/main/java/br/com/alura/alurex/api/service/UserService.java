@@ -2,8 +2,7 @@ package br.com.alura.alurex.api.service;
 
 import br.com.alura.alurex.api.dto.CreateUserDTO;
 import br.com.alura.alurex.api.dto.UserDetailsByUsernameDTO;
-import br.com.alura.alurex.api.exception.User.DuplicateEmailException;
-import br.com.alura.alurex.api.exception.User.DuplicateUsernameException;
+import br.com.alura.alurex.api.exception.User.DuplicateEmailOrUsernameException;
 import br.com.alura.alurex.api.exception.User.UserNotFoundException;
 import br.com.alura.alurex.api.model.User;
 import br.com.alura.alurex.api.repository.UserRepository;
@@ -22,16 +21,10 @@ public class UserService {
     public Long create(CreateUserDTO dto){
         User user = new User(dto);
 
-        //add or
-        boolean existsByEmail = repository.existsByEmail(user.getEmail());
-        boolean existsByUsername = repository.existsByUsername(user.getUsername());
+        boolean existsByEmailOrUsername = repository.existsByEmailOrUsername(user.getEmail(), user.getUsername());
 
-        if (existsByEmail){
-            throw new DuplicateEmailException();
-        }
-
-        if (existsByUsername){
-            throw new DuplicateUsernameException();
+        if (existsByEmailOrUsername){
+            throw new DuplicateEmailOrUsernameException();
         }
 
         repository.save(user);
@@ -48,16 +41,6 @@ public class UserService {
         }
 
         return dto.get();
-    }
-
-    public User findByUsername(String username){
-        Optional<User> user = repository.findUserByUsernameReturnModel(username);
-
-        if (user.isEmpty()){
-            throw new UserNotFoundException();
-        }
-
-        return user.get();
     }
 
     public User findById(Long id){

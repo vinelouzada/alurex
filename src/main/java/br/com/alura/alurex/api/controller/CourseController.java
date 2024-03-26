@@ -21,7 +21,7 @@ public class CourseController {
     private CourseService service;
 
     @PostMapping
-    public ResponseEntity create(@RequestBody @Valid CreateCourseDTO dto, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<CreateCourseDTO> create(@RequestBody @Valid CreateCourseDTO dto, UriComponentsBuilder uriBuilder){
 
         Long idCourse = this.service.create(dto);
 

@@ -3,8 +3,7 @@ package br.com.alura.alurex.api.exception;
 import br.com.alura.alurex.api.exception.Course.CourseNotFoundException;
 import br.com.alura.alurex.api.exception.Enrollment.EnrollmentAlreadyExistsException;
 import br.com.alura.alurex.api.exception.Enrollment.EnrollmentNotFoundException;
-import br.com.alura.alurex.api.exception.User.DuplicateEmailException;
-import br.com.alura.alurex.api.exception.User.DuplicateUsernameException;
+import br.com.alura.alurex.api.exception.User.DuplicateEmailOrUsernameException;
 import br.com.alura.alurex.api.exception.User.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(exceptionDetails.httpStatus()).body(exceptionDetails);
     }
 
-    @ExceptionHandler({DuplicateEmailException.class, DuplicateUsernameException.class, EnrollmentAlreadyExistsException.class})
+    @ExceptionHandler({DuplicateEmailOrUsernameException.class, EnrollmentAlreadyExistsException.class})
     public ResponseEntity<ExceptionDetails> handleDuplicateDataException(RuntimeException ex) {
 
         ExceptionDetails exceptionDetails = new ExceptionDetails(
