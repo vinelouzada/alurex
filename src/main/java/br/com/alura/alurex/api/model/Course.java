@@ -46,4 +46,9 @@ public class Course {
         this.createdAt = LocalDate.now();
         this.instructor = instrutor;
     }
+
+    public void markAsInactive(){
+        this.status = CourseStatus.INACTIVE;
+        this.inactiveAt = LocalDate.now();
+    }
 }

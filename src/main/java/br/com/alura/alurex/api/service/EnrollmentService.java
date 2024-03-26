@@ -1,6 +1,8 @@
 package br.com.alura.alurex.api.service;
 
 import br.com.alura.alurex.api.dto.CreateEnrollmentDTO;
+import br.com.alura.alurex.api.enums.CourseStatus;
+import br.com.alura.alurex.api.exception.Enrollment.CourseEnrollmentException;
 import br.com.alura.alurex.api.exception.Enrollment.EnrollmentAlreadyExistsException;
 import br.com.alura.alurex.api.exception.Enrollment.EnrollmentNotFoundException;
 import br.com.alura.alurex.api.model.Course;
@@ -27,6 +29,10 @@ public class EnrollmentService {
     public Enrollment create(CreateEnrollmentDTO dto){
         User user = userService.findById(dto.idUser());
         Course course = courseService.findById(dto.idCourse());
+
+        if (course.getStatus().equals(CourseStatus.INACTIVE)){
+            throw new CourseEnrollmentException();
+        }
 
         Enrollment enrollment = new Enrollment(user, course);
 
