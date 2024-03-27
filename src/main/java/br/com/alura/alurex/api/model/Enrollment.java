@@ -1,5 +1,6 @@
 package br.com.alura.alurex.api.model;
 
+import br.com.alura.alurex.api.dto.CreateFeedbackDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,12 +26,24 @@ public class Enrollment{
     @JoinColumn(insertable = false, updatable = false)
     private Course course;
 
-    private LocalDate createdAt;
+    private LocalDate createdAtEnrollment;
+
+    private Integer score;
+
+    private String reason;
+
+    private LocalDate createdAtFeedback;
 
     public Enrollment(User user, Course course){
         this.user = user;
         this.course = course;
         this.id = new EnrollmentId(user.getId(), course.getId());
-        this.createdAt = LocalDate.now();
+        this.createdAtEnrollment = LocalDate.now();
+    }
+
+    public void setFeedback(CreateFeedbackDTO dto){
+        this.score = dto.score();
+        this.reason = dto.reason();
+        this.createdAtFeedback = LocalDate.now();
     }
 }

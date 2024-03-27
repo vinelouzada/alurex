@@ -42,9 +42,7 @@ public class EnrollmentService {
             throw new EnrollmentAlreadyExistsException();
         }
 
-        Enrollment enrollmentCreated = repository.save(enrollment);
-
-        return enrollmentCreated;
+        return repository.save(enrollment);
     }
 
     public Enrollment findById(Long idUser, Long idCourse){
