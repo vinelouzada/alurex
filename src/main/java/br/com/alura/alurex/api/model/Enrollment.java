@@ -34,6 +34,7 @@ public class Enrollment{
 
     private LocalDate createdAtFeedback;
 
+
     public Enrollment(User user, Course course){
         this.user = user;
         this.course = course;

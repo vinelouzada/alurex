@@ -6,12 +6,12 @@ import br.com.alura.alurex.api.model.Course;
 import java.time.LocalDate;
 
 public record CourseDataDTO(String name,
-                            String instructor,
+                            String instructorEmail,
                             CourseStatus status,
                             LocalDate createdAt,
                             LocalDate inactiveAt) {
     public CourseDataDTO(Course course){
-        this(course.getName(), course.getInstrutorName(),
+        this(course.getName(), course.getInstructorEmail(),
                 course.getStatus(), course.getCreatedAt(),
                 course.getInactiveAt());
     }

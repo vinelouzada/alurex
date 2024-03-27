@@ -24,7 +24,7 @@ public class Course {
     private Long id;
     private String name;
     private String code;
-    private String instrutorName;
+    private String instructorEmail;
     private String description;
     @Enumerated(EnumType.STRING)
     private CourseStatus status;
@@ -40,7 +40,7 @@ public class Course {
     public Course (CreateCourseDTO dto, User instrutor){
         this.name = dto.name();
         this.code = dto.code();
-        this.instrutorName = instrutor.getName();
+        this.instructorEmail = getInstructorEmail();
         this.description = dto.description();
         this.status = dto.status();
         this.createdAt = LocalDate.now();

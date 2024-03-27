@@ -40,6 +40,7 @@ public class User  implements UserDetails {
         this.username = dto.username();
         this.email = dto.email();
         this.password = passwordBCrypt;
+        System.out.println(passwordBCrypt);
         this.role = Role.STUDENT.name();
         this.createdAt = LocalDate.now();
     }
