@@ -5,6 +5,7 @@ import br.com.alura.alurex.api.dto.FeedbackDataDTO;
 import br.com.alura.alurex.api.dto.NpsReportDTO;
 import br.com.alura.alurex.api.service.FeedbackService;
 import br.com.alura.alurex.api.service.NpsService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/feedback")
+@SecurityRequirement(name = "bearer-key")
 public class FeedbackController {
 
     @Autowired

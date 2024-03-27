@@ -4,6 +4,7 @@ import br.com.alura.alurex.api.dto.CreateUserDTO;
 import br.com.alura.alurex.api.dto.UserDataDTO;
 import br.com.alura.alurex.api.dto.UserDetailsByUsernameDTO;
 import br.com.alura.alurex.api.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/user")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
     @Autowired

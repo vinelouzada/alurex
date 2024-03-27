@@ -4,6 +4,8 @@ import br.com.alura.alurex.api.dto.CreateEnrollmentDTO;
 import br.com.alura.alurex.api.dto.FindEnrollmentDTO;
 import br.com.alura.alurex.api.model.Enrollment;
 import br.com.alura.alurex.api.service.EnrollmentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +15,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("/enrollment")
 public class EnrollmentController {
 
     @Autowired
     private EnrollmentService service;
+
 
     @PostMapping
     @Transactional

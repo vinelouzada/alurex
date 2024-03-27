@@ -7,6 +7,8 @@ import br.com.alura.alurex.api.dto.InactiveCourseDataDTO;
 import br.com.alura.alurex.api.enums.CourseStatus;
 import br.com.alura.alurex.api.model.Course;
 import br.com.alura.alurex.api.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("/course")
 public class CourseController {
