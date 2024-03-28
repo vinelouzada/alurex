@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class User  implements UserDetails {
     private String email;
     private String password;
     private String role;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "user")
     private List<Enrollment> enrollments;
@@ -40,16 +39,12 @@ public class User  implements UserDetails {
         this.username = dto.username();
         this.email = dto.email();
         this.password = passwordBCrypt;
-        System.out.println(passwordBCrypt);
         this.role = Role.STUDENT.name();
-        this.createdAt = LocalDate.now();
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_"+role));
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

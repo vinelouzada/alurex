@@ -1,15 +1,13 @@
 package br.com.alura.alurex.api.model;
 
 import br.com.alura.alurex.api.dto.CreateCourseDTO;
-import br.com.alura.alurex.api.dto.UserDetailsByUsernameDTO;
 import br.com.alura.alurex.api.enums.CourseStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "courses")
@@ -28,8 +26,8 @@ public class Course {
     private String description;
     @Enumerated(EnumType.STRING)
     private CourseStatus status;
-    private LocalDate createdAt;
-    private LocalDate inactiveAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime inactiveAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User instructor;
@@ -43,12 +41,20 @@ public class Course {
         this.instructorEmail = getInstructorEmail();
         this.description = dto.description();
         this.status = dto.status();
-        this.createdAt = LocalDate.now();
         this.instructor = instrutor;
+    }
+
+    public Course(String name, String code, String description, CourseStatus status, User instructor) {
+        this.name = name;
+        this.code = code;
+        this.description = description;
+        this.status = status;
+        this.instructor = instructor;
+        this.instructorEmail = getInstructorEmail();
     }
 
     public void markAsInactive(){
         this.status = CourseStatus.INACTIVE;
-        this.inactiveAt = LocalDate.now();
+        this.inactiveAt = LocalDateTime.now();
     }
 }

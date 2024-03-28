@@ -67,4 +67,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(exceptionDetails.httpStatus()).body(exceptionDetails);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ExceptionDetails> handleExceptionGenerics(RuntimeException ex){
+        ExceptionDetails exceptionDetails = new ExceptionDetails(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(exceptionDetails.httpStatus()).body(exceptionDetails);
+    }
 }

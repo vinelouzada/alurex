@@ -1,4 +1,4 @@
---     USERS:
+
 INSERT INTO users (name, username, email, password, role, created_at)
 VALUES ('Claire Redfield', 'claire123', 'claire@example.com', '$2a$10$xYDAmLQiuBIZm5uODh5SKOEYaWtxiMllcBQAHPsgRoIU8gjQG/dpe', 'STUDENT', '2024-03-22');
 
@@ -29,7 +29,7 @@ VALUES ('Jack Krauser', 'krauser123', 'krauser@example.com', '$2a$10$xYDAmLQiuBI
 INSERT INTO users (name, username, email, password, role, created_at)
 VALUES ('Luis Serra', 'luis123', 'luis@example.com', '$2a$10$xYDAmLQiuBIZm5uODh5SKOEYaWtxiMllcBQAHPsgRoIU8gjQG/dpe', 'STUDENT', '2024-03-22');
 
---     COURSES:
+
 INSERT INTO courses (name, code, instructor_email, description, status, created_at, inactive_at, instructor_id)
 VALUES ('PHP e MySQL', 'php-mysql', 'jill@example.com', 'Aprenda MySQL e PHP', 'ACTIVE', '2024-03-27', NULL, 2);
 
@@ -45,7 +45,7 @@ VALUES ('PHP: Conceito', 'php', 'ashley@example.com', 'Aprenda conceitos', 'ACTI
 INSERT INTO courses (name, code, instructor_email, description, status, created_at, inactive_at, instructor_id)
 VALUES ('Terminal', 'terminal', 'ashley@example.com', 'Aprenda terminal no Ubuntu', 'INACTIVE', '2024-03-27', '2024-03-27', 3);
 
--- 	   ENROLLMENTS:
+
 INSERT INTO enrollments (user_id, course_id, created_at_enrollment) VALUES (1, 1,'2024-03-27');
 INSERT INTO enrollments (user_id, course_id, created_at_enrollment) VALUES (1, 2, '2024-03-27');
 INSERT INTO enrollments (user_id, course_id, created_at_enrollment) VALUES (1, 3, '2024-03-27');

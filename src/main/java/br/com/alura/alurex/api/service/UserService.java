@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
 
     public UserDataDTO create(CreateUserDTO dto){
         boolean existsByEmailOrUsername = repository.existsByEmailOrUsername(dto.email(), dto.username());
+
         if (existsByEmailOrUsername){
             throw new DuplicateEmailOrUsernameException();
         }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class FeedbackService {
@@ -29,10 +30,14 @@ public class FeedbackService {
     @Autowired
     private NpsService npsService;
 
+    private final Integer LOW_SCORE = 6;
+
     public List<NpsReportDTO> reportNPS(){
+
         List<NpsMetricsDTO> dto = enrollmentRepository.findNpsMetrics();
 
         List<NpsReportDTO> npsReportList = new ArrayList<>();
+
         for (NpsMetricsDTO metricsCourse: dto){
             BigDecimal nps = npsService.calculate(metricsCourse);
 
@@ -47,18 +52,18 @@ public class FeedbackService {
         Enrollment enrollment = enrollmentService.findById(dto.idUser(), dto.idCourse());
 
         if (enrollment.getScore() != null){
-            throw  new FeedbackAlreadyExistsException();
+            throw new FeedbackAlreadyExistsException();
         }
 
         enrollment.setFeedback(dto);
-        enrollmentRepository.save(enrollment);
 
-        if (enrollment.getScore() < 6){
+        if (enrollment.getScore() < LOW_SCORE){
             sendNotificationToInstructor(enrollment);
         }
 
         return new FeedbackDataDTO(enrollment);
     }
+
 
     private void sendNotificationToInstructor(Enrollment enrollment){
 

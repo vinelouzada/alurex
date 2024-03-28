@@ -1,9 +1,6 @@
 package br.com.alura.alurex.api.service;
 
-import br.com.alura.alurex.api.dto.CourseDataDTO;
-import br.com.alura.alurex.api.dto.CreateCourseDTO;
-import br.com.alura.alurex.api.dto.InactiveCourseDTO;
-import br.com.alura.alurex.api.dto.InactiveCourseDataDTO;
+import br.com.alura.alurex.api.dto.*;
 import br.com.alura.alurex.api.enums.CourseStatus;
 import br.com.alura.alurex.api.enums.Role;
 import br.com.alura.alurex.api.exception.Course.CourseAlreadyInactiveException;
@@ -37,18 +34,25 @@ public class CourseService {
         return repository.findAllByStatus(pageable,status).map(CourseDataDTO::new);
     }
 
-    public Long create(CreateCourseDTO dto){
+    public CreatedDataCourseDTO create(CreateCourseDTO dto){
         User instructor = userService.findById(dto.instructorId());
 
-        if (!instructor.getRole().equals(Role.INSTRUCTOR.name())){
+        if (!Role.INSTRUCTOR.name().equals(instructor.getRole())){
             throw new UserMustBeInstructorException();
         }
 
-        Course course = new Course(dto, instructor);
+        Course course = dto.toModel(instructor);
 
         repository.save(course);
 
-        return course.getId();
+        return new CreatedDataCourseDTO(
+                course.getId(),
+                course.getName(),
+                course.getDescription(),
+                course.getStatus(),
+                course.getCode(),
+                instructor.getName()
+        );
     }
 
     public Course findById(Long id){
@@ -59,16 +63,15 @@ public class CourseService {
         }
     }
 
-
     public InactiveCourseDataDTO inactive(InactiveCourseDTO dto){
         Course course = findById(dto.id());
 
-        if (course.getStatus() == CourseStatus.INACTIVE){
+        if (CourseStatus.INACTIVE.equals(course.getStatus())){
             throw new CourseAlreadyInactiveException();
         }
 
         course.markAsInactive();
-        Course courseUpdated = repository.save(course);
-        return new InactiveCourseDataDTO(courseUpdated);
+
+        return new InactiveCourseDataDTO(course);
     }
 }

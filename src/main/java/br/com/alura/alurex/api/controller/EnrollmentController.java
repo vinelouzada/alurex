@@ -1,10 +1,10 @@
 package br.com.alura.alurex.api.controller;
 
 import br.com.alura.alurex.api.dto.CreateEnrollmentDTO;
+import br.com.alura.alurex.api.dto.CreatedDataEnrollmentDTO;
 import br.com.alura.alurex.api.dto.FindEnrollmentDTO;
 import br.com.alura.alurex.api.model.Enrollment;
 import br.com.alura.alurex.api.service.EnrollmentService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +24,16 @@ public class EnrollmentController {
     @Autowired
     private EnrollmentService service;
 
-
     @PostMapping
     @Transactional
-    public ResponseEntity<CreateEnrollmentDTO> create(@RequestBody @Valid CreateEnrollmentDTO dto, UriComponentsBuilder uriBuilder){
-        Enrollment enrollment = this.service.create(dto);
+    public ResponseEntity<CreatedDataEnrollmentDTO> create(@RequestBody @Valid CreateEnrollmentDTO dto, UriComponentsBuilder uriBuilder){
+        CreatedDataEnrollmentDTO enrollmentDTO = this.service.create(dto);
+
         URI uri = uriBuilder.path("/enrollment/{userId}/{courseId}")
-                .buildAndExpand(enrollment.getUser(), enrollment.getCourse())
+                .buildAndExpand(enrollmentDTO.idUser(), enrollmentDTO.idCourse())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(enrollmentDTO);
     }
 
     @GetMapping("/{userId}/{courseId}")

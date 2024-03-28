@@ -4,5 +4,5 @@ ALTER TABLE enrollments
 ALTER TABLE enrollments
     ADD COLUMN score INT,
     ADD COLUMN reason TEXT,
-    ADD COLUMN created_at_feedback DATE;
+    ADD COLUMN created_at_feedback DATETIME;
 

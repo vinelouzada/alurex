@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, EnrollmentId> {
     Optional<Enrollment> findByUserIdAndCourseId(Long idUser, Long idCourse);
     boolean existsByUserIdAndCourseId(Long idUser, Long idCourse);
-
     @Query("""
        SELECT new br.com.alura.alurex.api.dto.NpsMetricsDTO(c.name,
        SUM(CASE WHEN e.score >= 9 THEN 1 ELSE 0 END),

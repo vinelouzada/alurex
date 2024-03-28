@@ -24,17 +24,16 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UserDataDTO> create(@RequestBody @Valid CreateUserDTO dto, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<UserDataDTO> create(@RequestBody @Valid CreateUserDTO dto){
         UserDataDTO userDataDTO = this.service.create(dto);
-        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(userDataDTO.id()).toUri();
-
-        return ResponseEntity.created(uri).body(userDataDTO);
+        return ResponseEntity.ok(userDataDTO);
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<UserDetailsByUsernameDTO> findByUsername(@PathVariable String username){
         UserDetailsByUsernameDTO dto = this.service.findByUsername(username);
-        return ResponseEntity.ok().body(dto);
+
+        return ResponseEntity.ok(dto);
     }
 
 }
