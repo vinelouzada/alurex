@@ -44,7 +44,7 @@ public class CourseController {
         return ResponseEntity.ok(courseDTO);
     }
 
-    @PatchMapping
+    @PatchMapping("/inactive")
     @Transactional
     public ResponseEntity<InactiveCourseDataDTO> inactive(@RequestBody @Valid InactiveCourseDTO dto){
         InactiveCourseDataDTO course = this.service.inactive(dto);
